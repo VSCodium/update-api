@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/update/(?<platform>[^/]+)/(?<quality>[^/]+)/(?<commit>[^/]+)",
+      "dest": "/api/update?platform=$platform&quality=$quality&commit=$commit"
+    }
+  ],
+  "builds": [{ "src": "index.js", "use": "@now/node" }]
+}
