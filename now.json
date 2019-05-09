@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "alias": ["vscodium.now.sh"],
+  "routes": [
+    {
+      "src": "/api/update/(?<platform>[^/]+)/(?<quality>[^/]+)/(?<commit>[^/]+)",
+      "dest": "/api/update?platform=$platform&quality=$quality&commit=$commit"
+    }
+  ],
+  "builds": [{ "src": "api/update/index.js", "use": "@now/node" }]
+}
