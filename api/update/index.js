@@ -16,6 +16,7 @@ the commit hash in the url parameter matches the "version" identifier in the abo
 
 
 const { parse } = require('url')
+const got = require('got')
 
 const STABLE = 'stable'
 
@@ -34,16 +35,21 @@ const OS = new Set([DARWIN, WINDOWS, LINUX])
 const TYPES = new Set([ARCHIVE, USER])
 const ARCH = new Set([IA32, X64])
 
-function getJSON ({ os, arch, type }) {
-  // TODO get os/arch/type specific JSON file from a repo where these files will be stored
-  return {
-    "url": "https://github.com/release/something.zip",
-    "name": "1.33.1", // the version number
-    "version": "51b0b28134d51361cf996d2f0a1c698247aeabd8", // the latest commit hash
-    "productVersion": "1.33.1", // the version number
-    "hash": "cb4109f196d23b9d1e8646ce43145c5bb62f55a8", // sha1 of the release download
-    "timestamp": 1554971059007,
-    "sha256hash": "ac2a1c8772501732cd5ff539a04bb4dc566b58b8528609d2b34bbf970d08cf01" // sha256 of the release download
+const VERSION_BASE_URL = 'https://raw.githubusercontent.com/VSCodium/versions/master'
+
+async function getJSON ({ os, arch, type }) {
+  // get os/arch/type specific JSON file from a repo where these files are stored
+  let versionUrl = `${VERSION_BASE_URL}/${os}`
+
+  if (arch) versionUrl += `/${arch}`
+  if (type) versionUrl += `/${type}`
+
+  try {
+    const response = await got(`${versionUrl}/latest.json`, { json: true })
+    if (!response.body) return null
+    return response.body
+  } catch (e) {
+    return null
   }
 }
 
@@ -69,7 +75,7 @@ function validateInput (platform, quality) {
   return { os, arch, type }
 }
 
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   const { query } = parse(req.url, true)
   const { platform, quality, commit } = query
   const input = validateInput(platform, quality)
@@ -80,9 +86,9 @@ module.exports = (req, res) => {
   }
 
   const { os, arch, type } = input
-  const latest = getJSON({ os, arch, type })
+  const latest = await getJSON({ os, arch, type })
 
-  if (commit === latest.version) {
+  if (!latest || commit === latest.version) {
     res.writeHead(204)
     res.end()
     return

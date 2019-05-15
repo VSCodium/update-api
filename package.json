@@ -1,0 +1,12 @@
+{
+  "name": "vscodium-update-api",
+  "author": "Peter Squicciarini <stripedpajamas273@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vscodium/update-api"
+  },
+  "dependencies": {
+    "got": "^9.6.0"
+  }
+}
