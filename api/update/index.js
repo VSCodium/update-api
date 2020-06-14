@@ -62,6 +62,10 @@ function validateInput (platform, quality) {
   let [os, arch, type] = platform.split('-')
   if (!OS.has(os)) return false
 
+  if (os === WINDOWS && arch === X64 && !type) type = SYSTEM
+
+  if (os === WINDOWS && !arch && !type) arch = SYSTEM
+
   if (os === WINDOWS && !type) {
     type = arch
     arch = IA32
