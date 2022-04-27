@@ -24,6 +24,7 @@ const DARWIN = 'darwin'
 const WINDOWS = 'win32'
 const LINUX = 'linux'
 
+const ARM64 = 'arm64'
 const IA32 = 'ia32'
 const X64 = 'x64'
 
@@ -34,7 +35,7 @@ const USER = 'user'
 const QUALITIES = new Set([STABLE])
 const OS = new Set([DARWIN, WINDOWS, LINUX])
 const TYPES = new Set([ARCHIVE, SYSTEM, USER])
-const ARCH = new Set([IA32, X64])
+const ARCH = new Set([ARM64, IA32, X64])
 
 const VERSION_BASE_URL = 'https://raw.githubusercontent.com/VSCodium/versions/master'
 
