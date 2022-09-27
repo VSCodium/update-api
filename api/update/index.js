@@ -31,11 +31,12 @@ const X64 = 'x64'
 
 const SYSTEM = 'system'
 const ARCHIVE = 'archive'
+const MSI = 'msi'
 const USER = 'user'
 
 const QUALITIES = new Set([INSIDER, STABLE])
-const OS = new Set([DARWIN, WINDOWS, LINUX])
-const TYPES = new Set([ARCHIVE, SYSTEM, USER])
+const OS = new Set([DARWIN, LINUX, WINDOWS])
+const TYPES = new Set([ARCHIVE, MSI, USER, SYSTEM])
 const ARCH = new Set([ARM64, IA32, X64])
 
 const VERSION_BASE_URL = 'https://raw.githubusercontent.com/VSCodium/versions/master'
