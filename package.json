@@ -7,6 +7,6 @@
     "url": "https://github.com/vscodium/update-api"
   },
   "dependencies": {
-    "got": "^9.6.0"
+    "got": "^12.5.3"
   }
 }
