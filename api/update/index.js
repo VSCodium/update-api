@@ -65,14 +65,17 @@ function validateInput (platform, quality) {
   if (!OS.has(os)) return false
 
   if (os === WINDOWS) {
-    if (arch === X64 && !type) type = SYSTEM
-
-    if (!arch && !type) arch = SYSTEM
-
     if (!type) {
-      type = arch
-      arch = IA32
-    }
+      if (!arch) {
+        type = SYSTEM
+        arch = IA32
+      } else if (TYPES.has(arch)) {
+        type = arch
+        arch = IA32
+      } else {
+        type = SYSTEM
+      }
+    } 
 
     if (!TYPES.has(type)) return false
   } else if (os === DARWIN) {
